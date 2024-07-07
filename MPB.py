@@ -181,7 +181,8 @@ fig_TC.update_layout(showlegend=True,
                      title="<b>Investment Summary", 
                      title_x=0.5,
                      titlefont_size=20,
-                     legend=dict(orientation="h", yanchor="bottom", y=-0.1)
+                     legend=dict(orientation="h", yanchor="bottom", y=-0.1),
+                     margin=dict(l=10, r=10, t=40, b=10)
 )
 #st.plotly_chart(fig_TC)
 
