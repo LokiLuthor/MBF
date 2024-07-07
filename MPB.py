@@ -180,7 +180,8 @@ fig_TC.update_layout(showlegend=True,
                      plot_bgcolor="rgba(0,0,0,0)", 
                      title="<b>Investment Summary", 
                      title_x=0.5,
-                     titlefont_size=20
+                     titlefont_size=20,
+                     legend=dict(orientation="h", yanchor="bottom", y=-0.1)
 )
 #st.plotly_chart(fig_TC)
 
