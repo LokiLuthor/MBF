@@ -3,9 +3,7 @@ import plotly.express as px
 import streamlit as st
 import plotly.graph_objects as go
 
-st.set_page_config(page_title="Mandatory Pension Booster", page_icon=":bar_chart:",layout="wide")
-
-
+#Allows pandas to scan the excel file containing the data set for all combinations needed for the MPB Dashboard
 df = pd.read_excel(
     io= 'MPB_DataSet.xlsx',
     engine= 'openpyxl',
@@ -14,12 +12,8 @@ df = pd.read_excel(
     usecols= 'A:J',
     nrows= 18602)
 
-
-    
-
-
 #--------SIDEBAR------------#
-st.logo("MANDATORY PENSION BOOSTER CALCULATOR.png")
+st.logo("Mandatory Pension Booster Calculator.png")
 st.sidebar.header("Please select Starting Age, 2023 MSC, and 2025 MSC")
 
 starting_age = st.sidebar.selectbox(
@@ -46,10 +40,11 @@ df_selection = df.query(
 
 #---------MAINPAGE---------#
 #st.image("ssspension.png", width=800)
+st.set_page_config(page_title="Mandatory Pension Booster", page_icon=":bar_chart:",layout="wide")
 st.title(":bar_chart: Mandatory Pension Booster Dashboard")
 st.markdown("##")
 
-#TOP KPI's
+#Values to be displayed in the mainpage
 total_months = int(df_selection["No. Months until Retirement"])
 Total_Contri = f"₱ {round(float(df_selection['Total Contri']),2):,.2f}"
 Total_Contri1= round(float(df_selection['Total Contri']),2)
@@ -67,8 +62,9 @@ col3.metric("Potential Income", value = potential_income, delta= None, delta_col
 col4.metric("Total Management Fee", value = total_fee, delta= None, delta_color="normal", help=None, label_visibility="visible")
 col5.metric("Total Accumulated Account Value at Retirement", value = AAV, delta= None, delta_color="normal", help=None, label_visibility="visible")
 
-st.markdown("----")
+st.markdown("----")#separator between the values and the graph/charts
 
+#CALCULATION BLOCK
 SA = starting_age
 RA = 60
 max = (RA - SA)*12
@@ -118,6 +114,7 @@ for j in range(0, max):  # Loop from 1 to Max (inclusive)
         Fee[j] = MF * AV[j]
         AVMF[j] = AV[j] - Fee[j]
 
+#DISPLAYING GRAPHS/Charts
 FiveYear_AVMF = []
 for i in range(0, max, 12):  # Loop in steps of 60 months (5 years)
     FiveYear_AVMF.append(AVMF[i])
@@ -181,6 +178,8 @@ fig_TC.update_layout(showlegend=True,
                      title="<b>Investment Summary", 
                      title_x=0.5,
                      titlefont_size=20,
+                     legend=dict(orientation="h", yanchor="bottom", y=-0.1),
+                     margin=dict(l=10, r=10, t=40, b=10)
 )
 #st.plotly_chart(fig_TC)
 
