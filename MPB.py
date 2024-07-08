@@ -3,8 +3,6 @@ import plotly.express as px
 import streamlit as st
 import plotly.graph_objects as go
 
-st.set_page_config(page_title="Mandatory Pension Booster", page_icon=":bar_chart:",layout="wide")
-
 #Allows pandas to scan the excel file containing the data set for all combinations needed for the MPB Dashboard
 df = pd.read_excel(
     io= 'MPB_DataSet.xlsx',
@@ -15,7 +13,7 @@ df = pd.read_excel(
     nrows= 18602)
 
 #--------SIDEBAR------------#
-st.logo("Mandatory Pension Booster Calculator.png")
+st.logo("MANDATORY PENSION BOOSTER CALCULATOR.png")
 st.sidebar.header("Please select Starting Age, 2023 MSC, and 2025 MSC")
 
 starting_age = st.sidebar.selectbox(
@@ -42,6 +40,7 @@ df_selection = df.query(
 
 #---------MAINPAGE---------#
 #st.image("ssspension.png", width=800)
+st.set_page_config(page_title="Mandatory Pension Booster", page_icon=":bar_chart:",layout="wide")
 st.title(":bar_chart: Mandatory Pension Booster Dashboard")
 st.markdown("##")
 
