@@ -1,7 +1,11 @@
+#---PRELIMINARIES---#
 import pandas as pd
+import json
+import requests
 import plotly.express as px
 import streamlit as st
 import plotly.graph_objects as go
+from streamlit_lottie import st_lottie
 
 st.set_page_config(page_title="Mandatory Pension Booster", page_icon=":chart_with_upwards_trend:",layout="wide")
 
@@ -15,14 +19,13 @@ df = pd.read_excel(
     nrows= 18602)
 
 #--------SIDEBAR------------#
-st.logo("MANDATORY PENSION BOOSTER CALCULATOR.png")
+st.logo("Mandatory Pension Booster Calculator.png")
 st.sidebar.header("Please select Starting Age, 2023 MSC, and 2025 MSC")
 
 starting_age = st.sidebar.selectbox(
     "Starting Age:",
     options=df["Age"].unique()
 )
-
 MSC_2023 = st.sidebar.selectbox(
     "MSC in 2023:",
     options=df["MSC1"].unique()
@@ -42,8 +45,26 @@ df_selection = df.query(
 
 #---------MAINPAGE---------#
 #st.image("ssspension.png", width=800)
-st.title(":chart_with_upwards_trend: Mandatory Pension Booster Dashboard")
-st.markdown("##")
+#animation:
+def load_lottiefile(filepath: str):
+    with open(filepath, "r") as f:
+        return json.load(f)
+lottie_Investment = load_lottiefile("lottiefiles/Investment.json")
+
+colm1, colm2 = st.columns((4, 1))
+with colm1:
+    st.title(":chart_with_upwards_trend: Mandatory Pension Booster Dashboard")
+
+with colm2:
+    st_lottie(
+        lottie_Investment,
+        speed = 1,
+        reverse = False,
+        loop = True,
+        quality= "high",
+        width=150,
+        key="animation"
+    )
 
 #Values to be displayed in the mainpage
 total_months = int(df_selection["No. Months until Retirement"])
@@ -56,6 +77,7 @@ total_fee1= round(float(df_selection['Total Management fee']),2)
 AAV =  f"₱ {round(float(df_selection['TAAV']),2):,.2f}"
 AAV1 = round(float(df_selection['TAAV']),2)
 
+#Displays by column:
 col1, col2, col3, col4, col5= st.columns(5)
 col1.metric("No. of Months Until Retirement", value = total_months, delta= None, delta_color="normal", help=None, label_visibility="visible")
 col2.metric("Total Contribution", value = Total_Contri, delta= None, delta_color="normal", help=None, label_visibility="visible")
@@ -65,7 +87,7 @@ col5.metric("Total Accumulated Account Value at Retirement", value = AAV, delta=
 
 st.markdown("----")#separator between the values and the graph/charts
 
-#CALCULATION BLOCK
+#---CALCULATIONS---#
 SA = starting_age
 RA = 60
 max = (RA - SA)*12
@@ -98,10 +120,10 @@ ROI=pow(1.06, 1/12) - 1 #return of investment
 MF= pow(1.01, 1/12) - 1 #management fee
             
 
-Income = [0] *max# Initialize Income list with zeros (length Max + 1)
-AV = [0] *max# Initialize AV list with zeros (length Max + 1)
-AVMF = [0] *max# Initialize AVMF list with zeros (length Max + 1)
-Fee = [0] *max # Initialize Fee list with zeros (length Max + 1)
+Income = [0] *max# Initialize Income list with zeros (length Max)
+AV = [0] *max# Initialize AV list with zeros (length Max)
+AVMF = [0] *max# Initialize AVMF list with zeros (length Max)
+Fee = [0] *max # Initialize Fee list with zeros (length Max)
 
 for j in range(0, max):  # Loop from 1 to Max (inclusive)
     if j == 0:
@@ -115,7 +137,7 @@ for j in range(0, max):  # Loop from 1 to Max (inclusive)
         Fee[j] = MF * AV[j]
         AVMF[j] = AV[j] - Fee[j]
 
-#DISPLAYING GRAPHS/Charts
+#----OUTPUT---#
 FiveYear_AVMF = []
 for i in range(0, max, 12):  # Loop in steps of 60 months (5 years)
     FiveYear_AVMF.append(AVMF[i])
@@ -176,17 +198,19 @@ fig_MP.update_layout( title="<b>Duration vs. Pension</b>",
 fig_TC = go.Figure(data=[go.Pie(labels=labels, values=values, hole=.3)])
 fig_TC.update_layout(showlegend=True, 
                      plot_bgcolor="rgba(0,0,0,0)", 
-                     title="<b>Investment Summary", 
+                     title="<b>Investment Summary</b>", 
                      title_x=0.5,
                      titlefont_size=20,
+
 )
 #st.plotly_chart(fig_TC)
 
 left_column, right_column = st.columns(2)
 left_column.plotly_chart(fig_MP, use_container_width=True)
 right_column.plotly_chart(fig_TC, use_container_width=True)
+st.markdown("----")
 
-# ---- HIDE STREAMLIT STYLE ----
+# ---- HIDE STREAMLIT STYLE ----#
 hide_st_style = """
             <style>
             #MainMenu {visibility: hidden;}
