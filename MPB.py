@@ -46,10 +46,14 @@ df_selection = df.query(
 #---------MAINPAGE---------#
 #st.image("ssspension.png", width=800)
 #animation:
-def load_lottiefile(filepath: str):
-    with open(filepath, "r") as f:
-        return json.load(f)
-lottie_Investment = load_lottiefile("lottiefiles/Investment.json")
+def load_lottieurl(url: str):
+    r = requests.get(url)
+    if r.status_code != 200:
+        return None
+    return r.json()
+
+# Load a Lottie animation
+lottie_Investment = load_lottieurl("https://lottie.host/11bb6ee9-4005-4e22-bbb8-caa1f82a19e9/RDv8waetES.json")
 
 colm1, colm2 = st.columns((4, 1))
 with colm1:
