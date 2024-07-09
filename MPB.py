@@ -3,7 +3,7 @@ import plotly.express as px
 import streamlit as st
 import plotly.graph_objects as go
 
-st.set_page_config(page_title="Mandatory Pension Booster", page_icon=":bar_chart:",layout="wide")
+st.set_page_config(page_title="Mandatory Pension Booster", page_icon=":chart_with_upwards_trend:",layout="wide")
 
 #Allows pandas to scan the excel file containing the data set for all combinations needed for the MPB Dashboard
 df = pd.read_excel(
@@ -42,7 +42,7 @@ df_selection = df.query(
 
 #---------MAINPAGE---------#
 #st.image("ssspension.png", width=800)
-st.title(":bar_chart: Mandatory Pension Booster Dashboard")
+st.title(":chart_with_upwards_trend: Mandatory Pension Booster Dashboard")
 st.markdown("##")
 
 #Values to be displayed in the mainpage
