@@ -7,7 +7,7 @@ import streamlit as st
 import plotly.graph_objects as go
 from streamlit_lottie import st_lottie
 
-st.set_page_config(page_title="Mandatory Pension Booster", page_icon=":chart_with_upwards_trend:",layout="wide")
+st.set_page_config(page_title="Mandatory MySSS Pension Booster", page_icon=":chart_with_upwards_trend:",layout="wide")
 
 #Allows pandas to scan the excel file containing the data set for all combinations needed for the MPB Dashboard
 df = pd.read_excel(
@@ -58,7 +58,7 @@ lottie_Investment = load_lottieurl("https://lottie.host/11bb6ee9-4005-4e22-bbb8-
 
 colm1, colm2 = st.columns((4, 1))
 with colm1:
-    st.title(":chart_with_upwards_trend: Mandatory Pension Booster Dashboard")
+    st.title(":chart_with_upwards_trend: Mandatory MySSS Pension Booster Dashboard")
 
 with colm2:
     st_lottie(
