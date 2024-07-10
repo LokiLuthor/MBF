@@ -19,7 +19,7 @@ df = pd.read_excel(
     nrows= 18602)
 
 #--------SIDEBAR------------#
-st.logo("Mandatory Pension Booster Calculator.png")
+st.logo("MANDATORY PENSION BOOSTER CALCULATOR.png")
 st.sidebar.header("Please select Starting Age, 2023 MSC, and 2025 MSC")
 
 starting_age = st.sidebar.selectbox(
