@@ -57,7 +57,7 @@ lottie_Investment = load_lottieurl("https://lottie.host/11bb6ee9-4005-4e22-bbb8-
 
 colm1, colm2 = st.columns((4, 1))
 with colm1:
-    st.title(":chart_with_upwards_trend:  "Mandatory Pension Booster Dashboard")
+    st.title(":chart_with_upwards_trend: Mandatory Pension Booster Dashboard")
 
 with colm2:
     st_lottie(
