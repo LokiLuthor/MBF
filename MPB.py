@@ -19,7 +19,7 @@ df = pd.read_excel(
     nrows= 18602)
 
 #--------SIDEBAR------------#
-st.logo("MANDATORY PENSION BOOSTER CALCULATOR.png")
+st.logo("Mandatory Pension Booster Calculator.png")
 st.sidebar.header("Please select Starting Age, 2023 MSC, and 2025 MSC")
 
 starting_age = st.sidebar.selectbox(
@@ -106,18 +106,18 @@ PC = 0.14  # Initial contribution rate
 MSC_limit = 20000  # Replace with the actual value for MSC_limit
 MSC1= MSC_2023
 MSC2= MSC_2025
-WISP_MSC = []  # List to store WISP_MSC values for each month (p)
-WISP_Contribution = []  # List to store WISP_Contribution values for each month (p)
+MMPB_MSC = []  # List to store MMPB_MSC values for each month (p)
+MMPB_Contribution = []  # List to store MMPB_Contribution values for each month (p)
 for p in range(1, max + 1):  # Loop from 1 to Max (inclusive)
     if p <= 24:  # Months for 2023-2024
         excess_MSC = MSC1 - MSC_limit
-        WISP_MSC.append(excess_MSC)
-        WISP_Contribution.append(excess_MSC * PC)
+        MMPB_MSC.append(excess_MSC)
+        MMPB_Contribution.append(excess_MSC * PC)
     else:  # Months for 2025 onwards
         PC = 0.15  # Update contribution rate
         excess_MSC = MSC2 - MSC_limit
-        WISP_MSC.append(excess_MSC)
-        WISP_Contribution.append(excess_MSC * PC)
+        MMPB_MSC.append(excess_MSC)
+        MMPB_Contribution.append(excess_MSC * PC)
 
 
 
@@ -133,12 +133,12 @@ Fee = [0] *max # Initialize Fee list with zeros (length Max)
 for j in range(0, max):  # Loop from 1 to Max (inclusive)
     if j == 0:
         Income[j]=0
-        AV[j] = WISP_Contribution[j] + Income[j]
+        AV[j] = MMPB_Contribution[j] + Income[j]
         Fee[j] = MF * AV[j]
         AVMF[j] = AV[j] - Fee[j]
     else:
         Income[j] = ROI * AVMF[j - 1]
-        AV[j] = WISP_Contribution[j] + AVMF[j - 1] + Income[j]
+        AV[j] = MMPB_Contribution[j] + AVMF[j - 1] + Income[j]
         Fee[j] = MF * AV[j]
         AVMF[j] = AV[j] - Fee[j]
 
