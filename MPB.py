@@ -175,6 +175,7 @@ fig_TAAV.update_layout(
     )
 )
 st.plotly_chart(fig_TAAV)
+st.markdown("----")
 
 labels = ['Total Contribution', 'Management Fee', 'Potential Income']
 values = [Total_Contri1, total_fee1, potential_income1]
