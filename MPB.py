@@ -55,6 +55,7 @@ def load_lottieurl(url: str):
 # Load a Lottie animation
 lottie_Investment = load_lottieurl("https://lottie.host/11bb6ee9-4005-4e22-bbb8-caa1f82a19e9/RDv8waetES.json")
 
+
 colm1, colm2 = st.columns((4, 1))
 with colm1:
     st.title(":chart_with_upwards_trend: Mandatory Pension Booster Dashboard")
